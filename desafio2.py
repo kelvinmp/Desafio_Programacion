@@ -1,4 +1,4 @@
-# lista = ["Cabernet Merlot Noir | ot"]
+import sys
 
 # Separar por lineas 
 # Se parar cadena inicial usando | como separador
@@ -10,21 +10,39 @@
     #guardar dicha palabra si si tiene
 
 
-vinos = ["Cabernet", "Merlot", "Noir"] 
-recuerdo = "ot"
+nombre_archivo = sys.argv[1]
 
-resultado = []   
+archivo = open(nombre_archivo, "r")
 
-for vino in vinos:
-    bandera = True
-    for letra in recuerdo:
-        if vino.count(letra) < recuerdo.count(letra):
-            bandera = False
-            break
-    if bandera:
-            resultado.append(vino)
+for linea in archivo:
+    linea = linea.strip()
+    if linea == "":
+        continue
+    
+    partes = linea.split("|")
+    vinos_str = partes[0].strip()
+    vinos = vinos_str.split()
+   
+    recuerdo = partes[1].strip()
 
-print(", ".join(resultado))
+    resultado = []   
+
+    for vino in vinos:
+        bandera = True
+        for letra in recuerdo:
+            if vino.count(letra) < recuerdo.count(letra):
+                bandera = False
+    
+                break
+        if bandera:
+                resultado.append(vino)
+
+    if len(resultado) > 0:
+        print(" ".join(resultado))
+    else:
+        print("False")
+
+archivo.close()
 
 
 
